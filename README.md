@@ -14,3 +14,8 @@ Available URLs:
 - get the report `GET api/analytics/reports/{id}/`
 - delete the report `DELETE api/analytics/reports/{id}/`
 - start processing the report `POST api/analytics/reports/{id}/start_processing/`
+
+Processing statuses:
+- 1: UPLOADED
+- 2: IN_PROGRESS
+- 3: DONE
