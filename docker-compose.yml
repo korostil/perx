@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+  web:
+    entrypoint: /entrypoint.sh
+    restart: always
+    build: app
+    ports:
+      - "8000:8000"
+    links:
+      - redis:redis
+    volumes:
+      - ./app:/code/
+      - web-static:/code/static
+    env_file: app/perx/.env
+    command: gunicorn perx.wsgi:application -w 2 --bind 0.0.0.0:8000
+
+  redis:
+    image: "redis:alpine"
+
+  nginx:
+    container_name: nginx
+    build: ./nginx/
+    ports:
+      - "80:80"
+    volumes:
+      - web-static:/code/static
+    links:
+      - web:web
+
+  celery:
+    build: app
+    container_name: 'perx_celery'
+    command: celery -A perx worker -l INFO
+    env_file: app/perx/.env
+    volumes:
+      - ./app:/code/
+    links:
+      - redis
+    depends_on:
+      - web
+      - redis
+volumes:
+  web-static:
