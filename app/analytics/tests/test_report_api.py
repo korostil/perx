@@ -48,7 +48,11 @@ def test_report_retrieving(api_client, report_factory):
 
 @pytest.mark.parametrize(
     'test_file,expected',
-    [('test_removed.xlsx', 'removed: 6'), ('test_added.xlsx', 'added: 78'), ('test_empty.xlsx', None)]
+    [
+        ('test_removed.xlsx', 'removed: 6'),
+        ('test_added.xlsx', 'added: 78'),
+        ('test_empty.xlsx', None),
+    ]
 )
 def test_report_handling(report_factory, test_file, expected):
     report = report_factory(file=test_file)
@@ -59,8 +63,16 @@ def test_report_handling(report_factory, test_file, expected):
     assert report.result == expected
 
 
+def test_non_exists_report_handling(api_client, report_factory):
+    report = report_factory(file='test_removed.xlsx')
+
+    response = api_client.get(reverse('report-detail', kwargs={'pk': report.id + 10000}))
+
+    assert response.status_code == status.HTTP_404_NOT_FOUND
+
+
 @pytest.mark.parametrize(
-    'test_file', ('test_removed.xlsx', 'test_added.xlsx', 'test_empty.xlsx')
+    'test_file', ('test_removed.xlsx', 'test_added.xlsx', 'test_empty.xlsx',)
 )
 def test_report_deleting(api_client, report_factory, test_file):
     report = report_factory(file=test_file)

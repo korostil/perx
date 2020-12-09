@@ -31,7 +31,7 @@ class ReportViewSet(ModelViewSet):
 
         if not report:
             return Response(
-                {'detail': "Report with id={} doesn't exist.".format(pk)}, status=status.HTTP_400_BAD_REQUEST)
+                {'detail': "Report with id={} not found.".format(pk)}, status=status.HTTP_404_NOT_FOUND)
 
         report.status = Report.IN_PROGRESS
         report.save()

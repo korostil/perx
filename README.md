@@ -1,6 +1,4 @@
 # perx
-[Test task for PERX](https://gist.github.com/abj/a073ca103839b20e9876bf09c9791656)
-
 To start the app run `docker-compose up --build`
 
 The app available on `http://0.0.0.0/`
