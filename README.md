@@ -1,7 +1,7 @@
 # perx
-To start the app run `docker-compose up --build`
+To start the app run `docker-compose up`
 
-The app available on `http://0.0.0.0/`
+The app available on `http://0.0.0.0:7777/`
 
 Available URLs:
 - login `POST api/users/login/ -d {"username": "ololo", "password": "ololo"}`
