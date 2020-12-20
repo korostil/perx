@@ -1,6 +1,5 @@
-from rest_framework import serializers
-
 from analytics.models import Report
+from rest_framework import serializers
 
 
 class ReportSerializer(serializers.ModelSerializer):
@@ -8,5 +7,5 @@ class ReportSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Report
-        fields = ('id', 'uploaded', 'processing_finished', 'status', 'result', 'file')
-        read_only_fields = ('id', 'uploaded', 'processing_finished', 'status', 'result')
+        fields = ("id", "uploaded", "processing_finished", "status", "result", "file")
+        read_only_fields = ("id", "uploaded", "processing_finished", "status", "result")

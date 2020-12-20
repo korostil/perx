@@ -14,7 +14,9 @@ def validate_xls_file(file_path: str) -> None:
     try:
         load_workbook(filename=file_path)
     except (InvalidFileException, BadZipFile):
-        raise ValidationError('Incorrect type of file! Please, upload valid excel file.')
+        raise ValidationError(
+            "Incorrect type of file! Please, upload valid excel file."
+        )
 
 
 class Report(models.Model):
@@ -25,9 +27,9 @@ class Report(models.Model):
     DONE = 3
 
     STATUS_CHOICES = (
-        (UPLOADED, 'Uploaded'),
-        (IN_PROGRESS, 'In progress'),
-        (DONE, 'Done')
+        (UPLOADED, "Uploaded"),
+        (IN_PROGRESS, "In progress"),
+        (DONE, "Done"),
     )
 
     uploaded = models.DateTimeField(auto_now_add=True)
@@ -44,7 +46,7 @@ class Report(models.Model):
         self.result = result
         self.processing_finished = datetime.now()
         self.status = self.DONE
-        self.save(update_fields=['result', 'processing_finished', 'status'])
+        self.save(update_fields=["result", "processing_finished", "status"])
 
     @classmethod
     def find_diff(cls, before: Generator, after: List[int]) -> str:
@@ -62,11 +64,11 @@ class Report(models.Model):
 
         for item in before:
             if not after_copy:
-                return 'removed: {}'.format(item)
+                return "removed: {}".format(item)
 
             try:
                 after_copy.remove(item)
             except ValueError:
-                return 'removed: {}'.format(item)
+                return "removed: {}".format(item)
 
-        return 'added: {}'.format(after_copy[0]) if after_copy else None
+        return "added: {}".format(after_copy[0]) if after_copy else None
